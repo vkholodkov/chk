@@ -21,13 +21,16 @@ const insertSort = (unsortedData, comparator) => {
 const bench = sortingFunction => {
   const startTime = Date.now();
 
+  // Nested arrays contain base as the first element and the power as the second
   const a = _.times(10000, () => [_.random(100, 10000), _.random(100, 10000)])
 
+  // Custom comparator
   const comparator = (a, b) => a[0] / b[0] - Math.log(b[1]) / Math.log(a[1]);
 
-  const result = sortingFunction([...a], comparator);
-  console.log(result);
-  result[_.random(0, 10000) % a.length] = 2; // Ensure the optimiser does not optimise out the sorting function
+  const result = sortingFunction(a, comparator);
+
+  // Ensure the optimiser does not optimise out the sorting function
+  result[_.random(0, 10000) % a.length] = 2;
 
   const endTime = Date.now();
 
